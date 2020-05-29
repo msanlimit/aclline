@@ -2,11 +2,16 @@
 //
 
 
+
+#define LIBSSH_STATIC 1
+#include <libssh/libssh.h>
+
 #include <string>
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include <libssh/libssh.h>
+
+
 
 #include "ACLData.h"
 
@@ -50,7 +55,7 @@ int write_to_channel(ssh_channel channel, const char* chars);
 
 int main(int argc, char* argv[])
 {
-    
+
     AclValz values;
 
 
@@ -67,8 +72,8 @@ int main(int argc, char* argv[])
     std::vector<std::string> lines = line_generator(data_instance);
 
    // std::cout << "\n" << data_instance->get_source_address() << "\t" << data_instance->get_dest_address() << "\t" << data_instance->get_source_port() << "\t" << data_instance->get_dest_port() << "\t" << data_instance->get_source_mask() << "\t" << data_instance->get_dest_mask() << std::endl;
-    
-   
+
+
     while (true) {
 
         if (int rc = ssh_connect(lines,fileop); rc == 5) {
@@ -86,7 +91,7 @@ int main(int argc, char* argv[])
         }
 
     }
-   
+
 
 
     return 0;
@@ -151,7 +156,7 @@ void open_to_write(std::string input) {
 
 
 std::vector<std::string> line_generator(std::shared_ptr<ACLData> &data) {
-    
+
     std::string init_line = " permit tcp";
 
     std::string end_line = "\n";
@@ -201,7 +206,7 @@ int ssh_connect(std::vector<std::string>& acl_lines,std::string ID) {
     //initial variables
     const char* username = "test";
     const char* password = "test123";
-    const std::string ip_addr = "172.16.1.100";
+    const std::string ip_addr = "172.16.2.100";
     int port = 22;
     int rc;
     int verbosity = SSH_LOG_PROTOCOL;
@@ -296,7 +301,7 @@ int ssh_connect(std::vector<std::string>& acl_lines,std::string ID) {
         s_buf += buf.assign(buffer, 0, nbytes);
         while (nbytes > 0)
         {
-            
+
             if (fwrite(buffer, 1, nbytes, stdout) != nbytes)
             {
                 ssh_channel_close(channel);
@@ -305,9 +310,9 @@ int ssh_connect(std::vector<std::string>& acl_lines,std::string ID) {
             }
             nbytes = ssh_channel_read(channel, buffer, sizeof(buffer), 0);
             s_buf += buf.assign(buffer, 0, nbytes);
-            
+
         }
-        
+
         if (nbytes < 0)
         {
             ssh_channel_close(channel);
@@ -385,7 +390,7 @@ int write_to_channel(ssh_channel channel, const char* chars) {
 
 
 
-//parsing parameters 
+//parsing parameters
 void Param_parse(int argc, char* const* argv, int& flags, AclValz& values) {
 
     if (argc < 5) {

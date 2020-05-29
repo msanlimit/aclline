@@ -84,7 +84,7 @@ ACLData::ACLData(std::string s_add, std::string d_add, std::string s_port, std::
 	ACLData::set_source_mask(s_mask);
 	ACLData::set_dest_mask(d_mask);
 
-	
+
 	ACLData::set_source_address(s_add);
 	ACLData::set_dest_address(d_add);
 
@@ -344,7 +344,7 @@ int ACLData::get_dest_mask_dec() {
 //some non member func
 bool ip_valid(std::string ip) {
 
-	const std::regex ipv4_valid("^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
+	const std::regex ipv4_valid("^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
 
 	if (std::regex_match(ip, ipv4_valid)) {
 		return true;
